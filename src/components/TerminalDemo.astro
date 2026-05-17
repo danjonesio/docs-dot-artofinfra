@@ -1,0 +1,256 @@
+---
+// The centerpiece: side-by-side terminal mocks showing the same prompt
+// answered by a plain AI vs an AI with the /artofinfra skill loaded.
+//
+// Both panels show the SAME natural-language question. The only difference
+// in the user input is the leading "/artofinfra" slash command on the right.
+// That's literally how the skill activates. Typing the slash command pulls
+// in the routing instructions before the agent answers.
+//
+// The inner panel body has a fixed height so the page doesn't jump as the
+// typewriter loop runs. Respects prefers-reduced-motion.
+
+const prompts = [
+  {
+    user: 'configure BGP between two Junos MX routers with bidirectional MD5 auth',
+    without: [
+      { text: '# generic answer, no rules loaded', color: 'dim' },
+      { text: '', color: 'plain' },
+      { text: 'set protocols bgp group EXT type external', color: 'plain' },
+      { text: 'set protocols bgp group EXT peer-as 65001', color: 'plain' },
+      { text: 'set protocols bgp group EXT neighbor 10.0.0.2 \\', color: 'plain' },
+      { text: '    authentication-key "secret"', color: 'plain' },
+      { text: 'commit', color: 'plain' },
+      { text: '', color: 'plain' },
+      { text: '# done', color: 'dim' },
+    ],
+    with: [
+      { text: '> fetching https://docs.artofinfra.com/router.md', color: 'cyan' },
+      { text: '> loading general/bgp.md, juniper/junos.md', color: 'cyan' },
+      { text: '> applying rules: router-id, MD5, prefix-limit, BFD,', color: 'cyan' },
+      { text: '                  commit confirmed', color: 'cyan' },
+      { text: '', color: 'plain' },
+      { text: 'set routing-options router-id 192.0.2.1', color: 'plain' },
+      { text: 'set routing-options autonomous-system 65000', color: 'plain' },
+      { text: 'set protocols bgp group EXT type external', color: 'plain' },
+      { text: 'set protocols bgp group EXT peer-as 65001', color: 'plain' },
+      { text: 'set protocols bgp group EXT neighbor 10.0.0.2 \\', color: 'plain' },
+      { text: '    authentication-key "${MD5_KEY}"', color: 'magenta' },
+      { text: 'set ... family inet unicast prefix-limit \\', color: 'plain' },
+      { text: '    maximum 500000 teardown 80', color: 'magenta' },
+      { text: 'set ... bfd-liveness-detection minimum-interval 300', color: 'magenta' },
+      { text: 'commit confirmed 5', color: 'magenta' },
+    ],
+  },
+  {
+    user: 'audit this IOS-XE switch config for security issues',
+    without: [
+      { text: '# generic checklist, no rule grounding', color: 'dim' },
+      { text: '', color: 'plain' },
+      { text: '- Use strong passwords', color: 'plain' },
+      { text: '- Disable unused services', color: 'plain' },
+      { text: '- Enable logging', color: 'plain' },
+      { text: '- Keep firmware up to date', color: 'plain' },
+      { text: '', color: 'plain' },
+      { text: '# vague, vendor-agnostic, no fixes', color: 'dim' },
+    ],
+    with: [
+      { text: '> loading workflows/audit.md', color: 'cyan' },
+      { text: '> loading cisco/ios-xe.md, general/hardening.md', color: 'cyan' },
+      { text: '', color: 'plain' },
+      { text: '## Audit findings: SW-CORE-01', color: 'cyan' },
+      { text: '', color: 'plain' },
+      { text: '### Critical', color: 'magenta' },
+      { text: '1. vty allows telnet (transport input telnet)', color: 'plain' },
+      { text: '   Rule cisco/ios-xe: "never allow telnet"', color: 'dim' },
+      { text: '   Fix: transport input ssh', color: 'magenta' },
+      { text: '', color: 'plain' },
+      { text: '### High', color: 'amber' },
+      { text: '2. enable password (type 7, reversible)', color: 'plain' },
+      { text: '   Rule cisco/ios-xe: scrypt secret only', color: 'dim' },
+      { text: '   Fix: enable algorithm-type scrypt secret <new>', color: 'magenta' },
+    ],
+  },
+];
+
+const promptsData = JSON.stringify(prompts);
+---
+
+<section class="relative pb-20 sm:pb-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div
+      data-terminal-demo
+      data-prompts={promptsData}
+      class="grid gap-4 sm:gap-6 lg:grid-cols-2"
+    >
+      <!-- Panel: Without Art of Infra -->
+      <article class="relative overflow-hidden rounded-xl bg-bg-panel/90 ring-1 ring-inset ring-white/5 backdrop-blur-sm">
+        <header class="flex items-center justify-between border-b border-white/5 px-4 py-3">
+          <div class="flex items-center gap-1.5" aria-hidden="true">
+            <span class="size-2.5 rounded-full bg-white/15"></span>
+            <span class="size-2.5 rounded-full bg-white/15"></span>
+            <span class="size-2.5 rounded-full bg-white/15"></span>
+          </div>
+          <p class="font-mono text-xs uppercase tracking-wide text-ink-dim">
+            Without Art of Infra
+          </p>
+          <span class="text-[10px] font-mono uppercase tracking-wide text-ink-dim/50">v0</span>
+        </header>
+        <div class="flex h-[30rem] flex-col px-4 py-4 sm:px-5 sm:py-5">
+          <p class="mb-3 min-h-[3rem] shrink-0 font-mono text-xs leading-6 text-ink-dim">
+            <span class="text-ink-dim">$ </span><span data-terminal-prompt-text></span><span aria-hidden="true" class="ml-px inline-block h-3 w-1.5 animate-cursor-blink bg-ink-dim align-text-bottom"></span>
+          </p>
+          <pre
+            data-terminal-output="without"
+            class="flex-1 overflow-hidden font-mono text-[12.5px] leading-6 text-ink/80 whitespace-pre-wrap"
+          ></pre>
+        </div>
+      </article>
+
+      <!-- Panel: With Art of Infra -->
+      <article class="relative overflow-hidden rounded-xl bg-bg-panel ring-1 ring-inset ring-neon-magenta/30 shadow-glow-magenta">
+        <div aria-hidden="true" class="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-neon-magenta/20 blur-2xl"></div>
+        <header class="flex items-center justify-between border-b border-neon-magenta/20 px-4 py-3">
+          <div class="flex items-center gap-1.5" aria-hidden="true">
+            <span class="size-2.5 rounded-full bg-neon-magenta/70"></span>
+            <span class="size-2.5 rounded-full bg-neon-cyan/70"></span>
+            <span class="size-2.5 rounded-full bg-neon-amber/70"></span>
+          </div>
+          <p class="font-mono text-xs uppercase tracking-wide text-neon-magenta neon-magenta">
+            With Art of Infra
+          </p>
+          <span class="text-[10px] font-mono uppercase tracking-wide text-neon-cyan/80">/artofinfra</span>
+        </header>
+        <div class="flex h-[30rem] flex-col px-4 py-4 sm:px-5 sm:py-5">
+          <p class="mb-3 min-h-[3rem] shrink-0 font-mono text-xs leading-6 text-ink-muted">
+            <span class="text-ink-muted">$ </span><span class="text-neon-cyan neon-cyan">/artofinfra</span> <span data-terminal-prompt-text></span><span aria-hidden="true" class="ml-px inline-block h-3 w-1.5 animate-cursor-blink bg-neon-magenta align-text-bottom"></span>
+          </p>
+          <pre
+            data-terminal-output="with"
+            class="flex-1 overflow-hidden font-mono text-[12.5px] leading-6 text-ink whitespace-pre-wrap"
+          ></pre>
+        </div>
+      </article>
+    </div>
+
+    <p class="mt-6 font-mono text-xs text-ink-dim">
+      // same question. left: no skill. right: prefixed with <span class="text-neon-cyan">/artofinfra</span>. fetched rules cited, vendor-specific config, real fix steps.
+    </p>
+  </div>
+</section>
+
+<script>
+  type Line = { text: string; color: 'plain' | 'dim' | 'cyan' | 'magenta' | 'amber' };
+  type Prompt = { user: string; without: Line[]; with: Line[] };
+
+  const colorClass: Record<Line['color'], string> = {
+    plain: 'text-ink/85',
+    dim: 'text-ink-dim',
+    cyan: 'text-neon-cyan',
+    magenta: 'text-neon-magenta',
+    amber: 'text-neon-amber',
+  };
+
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function renderLine(line: Line, partialLen?: number): string {
+    const visible = partialLen === undefined ? line.text : line.text.slice(0, partialLen);
+    return `<span class="${colorClass[line.color]}">${escapeHtml(visible)}</span>`;
+  }
+
+  function renderAllLines(lines: Line[], upto: number, partialLen: number): string {
+    const parts: string[] = [];
+    for (let i = 0; i < Math.min(upto, lines.length); i++) {
+      parts.push(renderLine(lines[i]));
+    }
+    if (upto < lines.length) {
+      parts.push(renderLine(lines[upto], partialLen));
+    }
+    return parts.join('\n');
+  }
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-terminal-demo]').forEach((el) => {
+    const promptsAttr = el.getAttribute('data-prompts');
+    if (!promptsAttr) return;
+    const prompts: Prompt[] = JSON.parse(promptsAttr);
+    const userEls = el.querySelectorAll<HTMLElement>('[data-terminal-prompt-text]');
+    const withoutEl = el.querySelector<HTMLElement>('[data-terminal-output="without"]')!;
+    const withEl = el.querySelector<HTMLElement>('[data-terminal-output="with"]')!;
+
+    if (reduce) {
+      const p = prompts[0];
+      userEls.forEach((n) => (n.textContent = p.user));
+      withoutEl.innerHTML = p.without.map((l) => renderLine(l)).join('\n');
+      withEl.innerHTML = p.with.map((l) => renderLine(l)).join('\n');
+      return;
+    }
+
+    let idx = 0;
+    let cancelled = false;
+
+    const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
+    async function typeText(target: HTMLElement, text: string, speed = 18) {
+      target.textContent = '';
+      for (let i = 0; i <= text.length; i++) {
+        if (cancelled) return;
+        target.textContent = text.slice(0, i);
+        await sleep(speed);
+      }
+    }
+
+    async function typeLines(target: HTMLElement, lines: Line[], speed = 8) {
+      target.innerHTML = '';
+      for (let i = 0; i < lines.length; i++) {
+        for (let c = 0; c <= lines[i].text.length; c++) {
+          if (cancelled) return;
+          target.innerHTML = renderAllLines(lines, i, c);
+          await sleep(speed);
+        }
+        await sleep(40);
+      }
+    }
+
+    async function playPrompt(p: Prompt) {
+      await Promise.all(Array.from(userEls).map((n) => typeText(n, p.user, 24)));
+      await sleep(400);
+
+      await Promise.all([
+        typeLines(withoutEl, p.without, 9),
+        typeLines(withEl, p.with, 7),
+      ]);
+
+      await sleep(3200);
+    }
+
+    async function loop() {
+      while (!cancelled) {
+        await playPrompt(prompts[idx]);
+        idx = (idx + 1) % prompts.length;
+        userEls.forEach((n) => (n.textContent = ''));
+        withoutEl.innerHTML = '';
+        withEl.innerHTML = '';
+        await sleep(500);
+      }
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          obs.disconnect();
+          loop();
+        }
+      });
+    }, { threshold: 0.15 });
+    obs.observe(el);
+
+    window.addEventListener('pagehide', () => { cancelled = true; });
+  });
+</script>

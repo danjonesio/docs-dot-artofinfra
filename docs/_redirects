@@ -1,0 +1,15 @@
+/router        /router.md            200
+/cisco         /cisco/index.md       200
+/cisco/        /cisco/index.md       200
+/juniper       /juniper/index.md     200
+/juniper/      /juniper/index.md     200
+/general       /general/index.md     200
+/general/      /general/index.md     200
+/iac           /iac/index.md         200
+/iac/          /iac/index.md         200
+/python        /python/index.md      200
+/python/       /python/index.md      200
+/netbox        /netbox/index.md      200
+/netbox/       /netbox/index.md      200
+/workflows     /workflows/index.md   200
+/workflows/    /workflows/index.md   200

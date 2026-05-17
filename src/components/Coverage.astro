@@ -1,0 +1,109 @@
+---
+const categories = [
+  {
+    name: 'Cisco',
+    href: 'https://docs.artofinfra.com/cisco/index.md',
+    docs: ['IOS-XE', 'NX-OS', 'ASA'],
+    desc: 'Vendor-specific configs for ISR, ASR, Catalyst, Nexus, and ASA.',
+    accent: 'magenta',
+  },
+  {
+    name: 'Juniper',
+    href: 'https://docs.artofinfra.com/juniper/index.md',
+    docs: ['Junos', 'SRX'],
+    desc: 'MX/QFX/EX patterns and SRX security-specific config.',
+    accent: 'cyan',
+  },
+  {
+    name: 'General networking',
+    href: 'https://docs.artofinfra.com/general/index.md',
+    docs: ['BGP', 'OSPF', 'VXLAN', 'ACLs', 'QoS', 'Hardening'],
+    desc: 'Vendor-agnostic design rules that apply across platforms.',
+    accent: 'purple',
+  },
+  {
+    name: 'Infrastructure as code',
+    href: 'https://docs.artofinfra.com/iac/index.md',
+    docs: ['Terraform', 'Ansible', 'Nornir'],
+    desc: 'Network automation patterns that survive contact with production.',
+    accent: 'amber',
+  },
+  {
+    name: 'Python automation',
+    href: 'https://docs.artofinfra.com/python/index.md',
+    docs: ['Netmiko', 'Scrapli', 'Jinja2'],
+    desc: 'Patterns and anti-patterns for Python-driven device interaction.',
+    accent: 'magenta',
+  },
+  {
+    name: 'NetBox',
+    href: 'https://docs.artofinfra.com/netbox/index.md',
+    docs: ['Data modeling', 'IPAM', 'Automation', 'Custom scripts', 'Config contexts'],
+    desc: 'Source-of-truth modeling: how to use NetBox without painting yourself into a corner.',
+    accent: 'cyan',
+  },
+  {
+    name: 'Workflows',
+    href: 'https://docs.artofinfra.com/workflows/index.md',
+    docs: ['Audit', 'Picker', 'Diff', 'Document', 'Validate'],
+    desc: 'How to approach common classes of task: audit a config, pick between approaches, diff a change.',
+    accent: 'purple',
+  },
+];
+
+const accentRing: Record<string, string> = {
+  magenta: 'hover:ring-neon-magenta/40',
+  cyan: 'hover:ring-neon-cyan/40',
+  purple: 'hover:ring-neon-purple/40',
+  amber: 'hover:ring-neon-amber/40',
+};
+const accentText: Record<string, string> = {
+  magenta: 'text-neon-magenta',
+  cyan: 'text-neon-cyan',
+  purple: 'text-neon-purple',
+  amber: 'text-neon-amber',
+};
+---
+
+<section class="border-t border-white/5 py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <p class="font-mono text-xs uppercase tracking-wide text-neon-cyan/80">
+      Coverage
+    </p>
+    <h2
+      class="mt-3 max-w-[28ch] font-display text-4xl font-semibold tracking-tight text-ink text-balance sm:text-5xl"
+    >
+      Seven categories. Twenty-seven docs.
+    </h2>
+    <p class="mt-4 max-w-[58ch] text-pretty text-base text-ink-muted sm:text-lg">
+      Every rule is opinionated and short. No exhaustive reference, that's the vendor's job. This is "do this, not that" for engineers shipping real networks.
+    </p>
+
+    <ul role="list" class="mt-12 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {categories.map((c) => (
+        <li>
+          <a
+            href={c.href}
+            class={`group block h-full rounded-xl bg-bg-raised/70 p-6 ring-1 ring-inset ring-white/5 sm:p-7 ${accentRing[c.accent]}`}
+          >
+            <h3 class={`font-display text-lg font-medium tracking-tight ${accentText[c.accent]}`}>
+              {c.name}
+            </h3>
+            <p class="mt-3 max-w-[48ch] text-pretty text-sm text-ink-muted">
+              {c.desc}
+            </p>
+            <ul role="list" class="mt-5 flex flex-wrap gap-1.5">
+              {c.docs.map((d) => (
+                <li class="font-mono text-[11px] uppercase tracking-wide text-ink-muted">
+                  <span class="rounded border border-white/10 bg-white/[0.03] px-2 py-0.5">
+                    {d}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

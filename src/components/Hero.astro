@@ -1,0 +1,58 @@
+---
+// Hero. Left-aligned, retrowave atmosphere, two CTAs.
+---
+
+<section class="relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-28">
+  <!-- Atmosphere: grid floor + sun -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <!-- Sun -->
+    <div class="absolute left-1/2 top-[28%] -z-10 h-72 w-72 -translate-x-1/2 rounded-full sun-gradient opacity-70 blur-3xl"></div>
+    <!-- Grid floor -->
+    <div class="grid-floor absolute inset-x-0 bottom-0 h-[60%]"></div>
+    <!-- Horizon line -->
+    <div class="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-neon-magenta/60 to-transparent"></div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <p class="font-mono text-xs uppercase tracking-wide text-neon-cyan/80">
+      <span class="inline-block size-1.5 rounded-full bg-neon-cyan align-middle"></span>
+      <span class="ml-2 align-middle">AI skill for infrastructure engineers</span>
+    </p>
+    <h1
+      class="mt-6 max-w-[20ch] font-display text-5xl font-semibold tracking-tight text-ink text-balance sm:text-6xl lg:text-7xl"
+    >
+      Teach your AI
+      <span class="text-neon-magenta neon-magenta">networking.</span>
+    </h1>
+    <p
+      class="mt-6 max-w-[58ch] text-pretty text-base text-ink-muted sm:text-lg"
+    >
+      Opinionated rules for Cisco, Juniper, BGP, OSPF, VXLAN, ACLs, hardening,
+      NetBox, and network automation in Terraform, Ansible, and Nornir. Your AI
+      fetches them on demand and stops guessing at configs.
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+      <a
+        href="#install"
+        class="inline-flex items-center gap-2 rounded-md bg-neon-magenta px-5 py-2.5 text-sm font-semibold text-bg shadow-glow-magenta ring-1 ring-inset ring-neon-magenta/80 hover:bg-neon-rose focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon-magenta"
+      >
+        Install the skill
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 shrink-0">
+          <path d="M5 12h14"/>
+          <path d="m12 5 7 7-7 7"/>
+        </svg>
+      </a>
+      <a
+        href="https://docs.artofinfra.com/router.md"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-ink hover:text-neon-cyan"
+      >
+        Browse the docs
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 shrink-0">
+          <path d="M7 7h10v10"/>
+          <path d="M7 17 17 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

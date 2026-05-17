@@ -1,0 +1,49 @@
+---
+import Logo from './Logo.astro';
+
+const examples = [
+  'Configure BGP between two Junos MX routers with bidirectional MD5 auth',
+  'Audit this IOS-XE config and flag any security issues',
+  'Set up VXLAN EVPN fabric on Nexus 9000',
+  'Write an Ansible role that pushes ACLs to all distribution switches',
+  'Model our campus VLANs in NetBox with the right relationships',
+  'Why is OSPF flapping between these two routers?',
+];
+---
+
+<section class="border-t border-white/5 py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <p class="font-mono text-xs uppercase tracking-wide text-neon-cyan/80">
+      Example prompts
+    </p>
+    <h2
+      class="mt-3 max-w-[28ch] font-display text-4xl font-semibold tracking-tight text-ink text-balance sm:text-5xl"
+    >
+      What it answers well.
+    </h2>
+
+    <ul role="list" class="mt-12 grid gap-3 sm:gap-4 sm:grid-cols-2">
+      {examples.map((e) => (
+        <li class="flex items-start gap-3 rounded-lg bg-bg-raised/50 p-4 ring-1 ring-inset ring-white/5">
+          <span class="mt-0.5 font-mono text-xs text-neon-magenta neon-magenta">/artofinfra</span>
+          <span class="font-mono text-[13px] text-ink/85">{e}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<footer class="border-t border-white/5 py-12">
+  <div class="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-6 sm:flex-row sm:items-center lg:px-8">
+    <div class="flex items-center gap-3">
+      <Logo class="h-7 w-auto" />
+      <span class="font-mono text-xs text-ink-dim">MIT licensed.</span>
+    </div>
+    <nav class="flex flex-wrap items-center gap-x-6 gap-y-2">
+      <a href="https://docs.artofinfra.com/router.md" class="font-normal text-sm text-ink-muted hover:text-ink">Docs</a>
+      <a href="https://artofinfra.com" class="font-normal text-sm text-ink-muted hover:text-ink">Blog</a>
+      <a href="https://github.com/danjonesio/docs-dot-artofinfra" class="font-normal text-sm text-ink-muted hover:text-ink">GitHub</a>
+      <a href="#install" class="font-normal text-sm text-ink-muted hover:text-ink">Install</a>
+    </nav>
+  </div>
+</footer>
