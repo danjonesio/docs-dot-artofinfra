@@ -85,7 +85,7 @@ The Cloudflare Pages project is configured with:
 2. Add `docs/cisco/topic.md` following the doc format below
 3. Add a one-line entry to `docs/cisco/index.md` linking to it
 4. If creating a new category, also add a row to `docs/router.md`'s category table and create `docs/{category}/index.md`
-5. Open a PR. Cloudflare Pages preview deploys give a working URL to test against before merge
+5. Open a PR. Preview deployments are disabled by policy: only merges to `main` produce a public deploy. Reviewers test locally (`gh pr checkout` + `cd web && npm run dev`) when needed.
 
 ## Doc format
 

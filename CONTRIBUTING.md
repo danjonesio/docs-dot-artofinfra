@@ -7,7 +7,7 @@ This guide covers contributions to the **content** in this repo: the markdown ru
 1. Fork the repo at <https://github.com/danjonesio/docs-dot-artofinfra>
 2. Edit or add a markdown file under `docs/{category}/`
 3. Update that category's `index.md` if you added a new file
-4. Open a PR. Cloudflare Pages will give you a preview URL automatically.
+4. Open a PR. A maintainer reviews; nothing goes public until your PR is merged.
 
 No build step. No test suite. Just markdown.
 
@@ -109,11 +109,13 @@ A maintainer will also update the homepage's `Coverage` section so the new categ
 
 ## PR process
 
-- Open the PR against `main`
-- Cloudflare Pages spins up a preview deploy automatically. The preview URL appears in the PR's checks panel.
-- Spot-check the preview: `https://<preview>.pages.dev/{category}/{topic}.md` should serve your raw markdown, and the category index should list it.
-- A maintainer will review for technical accuracy, format compliance, and tone. Expect requests for tightening, not rejection. Vague PRs may get questions like "is this a hard rule or a suggestion?"
+- Open the PR against `main`.
+- **Nothing about your branch is publicly deployed.** No preview URL, no `*.pages.dev` link. Only merges to `main` ship to `docs.artofinfra.com`.
+- A maintainer reviews for technical accuracy, format compliance, and tone. If the PR touches multiple files or complex config, the maintainer may pull the branch locally to test (`gh pr checkout <pr-number>` then verify in their own environment). You don't need to do anything to make that work.
+- Expect requests for tightening, not rejection. Vague PRs may get questions like "is this a hard rule or a suggestion?"
 - Once merged to `main`, the docs are live at `https://docs.artofinfra.com/...` within minutes. AI clients pick up the new rules on their next fetch.
+
+If you want to preview your own changes locally before opening the PR, you can build the homepage and the docs together: `cd web && npm install && npm run dev`. Your changes appear at `http://localhost:4321/{category}/{topic}.md`. This is local-only and gives you a fast iteration loop without exposing anything publicly.
 
 ## Questions
 
