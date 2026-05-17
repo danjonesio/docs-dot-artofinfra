@@ -1,6 +1,7 @@
 ---
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const agents = [
   { id: 'claude',   label: 'Claude Code', target: '.claude/skills/artofinfra/SKILL.md',     file: 'skills/claude/SKILL.md' },
@@ -10,10 +11,13 @@ const agents = [
   { id: 'amp',      label: 'Amp',         target: '.amp/skills/artofinfra/SKILL.md',        file: 'skills/amp/SKILL.md' },
 ];
 
-const cwd = process.cwd();
+// Resolve repo root from this file's location so the path is correct regardless
+// of where `npm run build` is invoked from. This component lives at
+// web/src/components/Install.astro, so the repo root is three levels up.
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const snippets = agents.map((a) => ({
   ...a,
-  contents: fs.readFileSync(path.join(cwd, a.file), 'utf8').trimEnd(),
+  contents: fs.readFileSync(path.join(repoRoot, a.file), 'utf8').trimEnd(),
 }));
 ---
 

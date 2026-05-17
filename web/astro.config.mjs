@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   site: 'https://docs.artofinfra.com',
-  publicDir: './docs',
+  publicDir: '../docs',
   outDir: './dist',
   integrations: [
     tailwind({

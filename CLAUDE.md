@@ -8,7 +8,7 @@ The canonical content for the **Art of Infra** AI skill, served at `https://docs
 
 This is primarily a **content repository**. There is no backend, auth, database, MCP server, or test suite. Cloudflare Pages serves the markdown files directly over HTTPS, and AI clients fetch them via a small `SKILL.md` installed in the user's agent (Claude Code, Cursor, Codex, OpenCode, Amp).
 
-The repo also has a small Astro + Tailwind build at the root that produces a marketing landing page at `docs.artofinfra.com/`. The build copies all of `docs/` through verbatim (Astro's `publicDir`), so the markdown URL structure that AI clients depend on is unchanged.
+The repo also has a small Astro + Tailwind build under `web/` that produces a marketing landing page at `docs.artofinfra.com/`. The build copies all of `docs/` through verbatim (Astro's `publicDir`), so the markdown URL structure that AI clients depend on is unchanged.
 
 Companion to the Ghost blog at `artofinfra.com`. The blog is human-readable long-form; this repo is AI-readable short-form rules.
 
@@ -35,21 +35,15 @@ URLs are full `https://docs.artofinfra.com/...` URLs. There is no custom URI sch
 ├── README.md
 ├── CLAUDE.md
 ├── AGENTS.md                 # Pointer to this file for non-Claude agents
+├── CONTRIBUTING.md
 ├── LICENSE
-├── package.json              # Astro + Tailwind deps for the homepage build
-├── astro.config.mjs          # publicDir: ./docs, outDir: ./dist, site URL
-├── tailwind.config.mjs       # retrowave palette, fonts, animations
-├── .nvmrc                    # Node version pin (20 LTS)
 ├── .gitignore
-├── src/                      # Homepage source (Astro)
-│   ├── pages/index.astro     # The landing page
-│   ├── layouts/Base.astro    # Shell + meta + OG card
-│   ├── components/           # Hero, TerminalDemo, HowItWorks, Coverage, Install, Footer, Header
-│   └── styles/global.css     # Tailwind directives + retrowave globals
 ├── docs/                     # Content (Astro publicDir, copied through verbatim)
 │   ├── _headers              # Cloudflare Pages: Content-Type for *.md
 │   ├── _redirects            # Cloudflare Pages: /cisco -> /cisco/index.md, etc.
 │   ├── router.md             # Skill instructions and category table
+│   ├── favicon.svg           # Square brand mark for browser tabs
+│   ├── aoilogo-dark.svg      # Wordmark, also accessible at /aoilogo-dark.svg
 │   ├── cisco/                # ios-xe, nxos, asa
 │   ├── juniper/              # junos, srx
 │   ├── general/              # bgp, ospf, vxlan, acl-design, qos, hardening
@@ -63,15 +57,27 @@ URLs are full `https://docs.artofinfra.com/...` URLs. There is no custom URI sch
 │   ├── codex/SKILL.md        # -> .codex/skills/artofinfra/SKILL.md
 │   ├── opencode/SKILL.md     # -> .opencode/skills/artofinfra/SKILL.md
 │   └── amp/SKILL.md          # -> .amp/skills/artofinfra/SKILL.md
-└── dist/                     # Build output (gitignored), published by Cloudflare Pages
+└── web/                      # Astro + Tailwind homepage (build artifacts only, no content)
+    ├── package.json          # Astro + Tailwind deps
+    ├── astro.config.mjs      # publicDir: ../docs, outDir: ./dist, site URL
+    ├── tailwind.config.mjs   # retrowave palette, fonts, animations
+    ├── .nvmrc                # Node version pin (20 LTS)
+    ├── src/                  # Homepage source
+    │   ├── pages/index.astro
+    │   ├── layouts/Base.astro
+    │   ├── components/       # Hero, TerminalDemo, HowItWorks, Coverage, Install, Contribute, Footer, Header, Logo
+    │   ├── styles/global.css
+    │   └── assets/aoilogo-dark.svg
+    └── dist/                 # Build output (gitignored), published by Cloudflare Pages
 ```
 
 The Cloudflare Pages project is configured with:
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Node version: 20 LTS (pinned via `.nvmrc`)
+- **Root directory:** `web`
+- **Build command:** `npm run build`
+- **Build output directory:** `dist` (resolved as `web/dist`)
+- **Node version:** 20 LTS (pinned via `web/.nvmrc`)
 
-`npm run build` produces `dist/index.html` (the homepage) plus a verbatim copy of every file under `docs/`: `_headers`, `_redirects`, `router.md`, and all category content. The AI fetch URL contract (`/router.md`, `/cisco/ios-xe.md`, etc.) is preserved.
+`npm run build` (run from `web/`) produces `web/dist/index.html` (the homepage) plus a verbatim copy of every file under `docs/`: `_headers`, `_redirects`, `router.md`, and all category content. The AI fetch URL contract (`/router.md`, `/cisco/ios-xe.md`, etc.) is preserved.
 
 ## Adding a new doc
 
@@ -130,16 +136,17 @@ Wrong rules in this repo become wrong rules in real networks. Treat content like
 
 ## Homepage development
 
-The landing page lives at the repo root as an Astro project; the install snippets shown in the Install section are read from `skills/{agent}/SKILL.md` at build time, so updating a skill file automatically updates the homepage.
+The landing page lives under `web/` as an Astro project. The install snippets shown in the Install section are read from `../skills/{agent}/SKILL.md` at build time (resolved via `import.meta.url` so it works regardless of cwd), so updating a skill file automatically updates the homepage.
 
 ```bash
+cd web
 npm install         # one-time
 npm run dev         # local dev server (default :4321), also serves docs/*.md verbatim
-npm run build       # produces dist/
-npm run preview     # serves dist/ statically for a final check
+npm run build       # produces web/dist/
+npm run preview     # serves web/dist/ statically for a final check
 ```
 
-Theming lives in `tailwind.config.mjs` (palette: `bg`, `ink`, `neon-*`) and `src/styles/global.css` (CRT overlay, neon glow utilities, sun/grid backgrounds). Component conventions follow the project-wide UI guidelines: left-aligned heading groups by default, `font-semibold`/`font-medium` on headings (never `font-bold`), `tracking-tight` on anything larger than `text-xl`, no `text-xs` for body, body min `text-base` on mobile.
+Theming lives in `web/tailwind.config.mjs` (palette: `bg`, `ink`, `neon-*`) and `web/src/styles/global.css` (CRT overlay, neon glow utilities, sun/grid backgrounds). Component conventions follow the project-wide UI guidelines: left-aligned heading groups by default, `font-semibold`/`font-medium` on headings (never `font-bold`), `tracking-tight` on anything larger than `text-xl`, no `text-xs` for body, body min `text-base` on mobile.
 
 ## Future: installer
 
@@ -149,4 +156,4 @@ Not built yet. Will be `npx @artofinfra/install` that detects the user's agent a
 
 - Content stays opinionated and short. Wrong rules in this repo become wrong rules in real networks.
 - The Ghost blog at artofinfra.com is for long-form prose. Short, terse, opinionated rules belong here.
-- The homepage tooling (Astro + Tailwind at the root) exists to serve the project's brand presence. Don't expand the build to do other things. No CMS, no dynamic backend, no application code. If a feature can be a markdown doc, it should be.
+- The homepage tooling (Astro + Tailwind under `web/`) exists to serve the project's brand presence. Don't expand the build to do other things. No CMS, no dynamic backend, no application code. If a feature can be a markdown doc, it should be.
