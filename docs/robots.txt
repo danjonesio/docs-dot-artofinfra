@@ -1,0 +1,32 @@
+# Art of Infra docs are designed to be fetched by AI coding assistants.
+# Read what you need, cache appropriately. See router.md for the routing
+# table: https://docs.artofinfra.com/router.md
+
+User-agent: *
+Allow: /
+
+# Explicitly welcome known AI fetchers (redundant with the wildcard above,
+# but states intent for tools that special-case their own user-agent).
+User-agent: Claude-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
