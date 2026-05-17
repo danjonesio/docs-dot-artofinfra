@@ -1,2 +1,5 @@
+/*
+  Access-Control-Allow-Origin: *
+
 /*.md
   Content-Type: text/markdown; charset=utf-8
