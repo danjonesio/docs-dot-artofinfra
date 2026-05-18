@@ -13,6 +13,12 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
+
+// Self-hosted Umami analytics. Both vars must be set at build time
+// (Cloudflare dashboard → Variables and Secrets) for the tracker to
+// render. Unset on local dev so we don't pollute production stats.
+const umamiSrc = import.meta.env.PUBLIC_UMAMI_SRC;
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 ---
 
 <!doctype html>
@@ -38,6 +44,12 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {
+      umamiSrc && umamiWebsiteId && (
+        <script defer src={umamiSrc} data-website-id={umamiWebsiteId} />
+      )
+    }
   </head>
   <body class="min-h-dvh isolate">
     <!-- CRT scan lines overlay, site-wide -->
