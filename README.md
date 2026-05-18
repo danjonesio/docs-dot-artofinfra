@@ -38,6 +38,10 @@ Three levels:
 - `{category}/index.md`: list of docs in a category
 - `{category}/{topic}.md`: opinionated rules
 
+## Community
+
+Discord: <https://discord.artofinfra.com>. Questions, suggestions, war stories from real networks, or help with the skill itself, that's where to ask.
+
 ## Contributing
 
 PRs welcome. Docs are short, opinionated, and config-example-driven. "Do this, not that."

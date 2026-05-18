@@ -119,4 +119,4 @@ If you want to preview your own changes locally before opening the PR, you can b
 
 ## Questions
 
-Open an issue at <https://github.com/danjonesio/docs-dot-artofinfra/issues> if you want to talk through what a good rule looks like before spending time writing one. Especially welcome for new vendor coverage where the scope isn't obvious.
+Fastest is the Discord: <https://discord.artofinfra.com>. For longer-form discussion, especially scoping new vendor coverage where the boundaries aren't obvious, open an issue at <https://github.com/danjonesio/docs-dot-artofinfra/issues>.
