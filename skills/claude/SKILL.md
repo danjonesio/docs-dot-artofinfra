@@ -1,6 +1,6 @@
 ---
 name: artofinfra
-description: Use when the user invokes /artofinfra or asks a networking/infrastructure question. Covers Cisco IOS-XE/NX-OS/ASA, Juniper Junos/SRX, BGP, OSPF, VXLAN, ACLs, QoS, device hardening, NetBox modeling, Terraform/Ansible/Nornir network automation, and Python network libraries (Netmiko, Scrapli, Jinja2).
+description: Use only when the user explicitly types /artofinfra. Opinionated rules for networking and infrastructure.
 ---
 
 # Art of Infra

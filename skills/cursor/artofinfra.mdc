@@ -1,5 +1,5 @@
 ---
-description: Opinionated networking and infrastructure best practices. Activate for questions about Cisco, Juniper, BGP, OSPF, VXLAN, ACLs, QoS, device hardening, NetBox, Terraform/Ansible/Nornir, or Python network automation.
+description: Use only when the user explicitly types /artofinfra. Opinionated rules for networking and infrastructure.
 globs: []
 alwaysApply: false
 ---
