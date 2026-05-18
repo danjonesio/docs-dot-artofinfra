@@ -48,5 +48,26 @@ const ogImage = new URL('/og.png', Astro.site);
     </div>
 
     <slot />
+
+    <script>
+      // Scroll-triggered reveal. CSS in global.css hides elements with
+      // [data-reveal] by default (only when prefers-reduced-motion is
+      // unset); this script flips data-revealed on each element as it
+      // enters the viewport, triggering the CSS transition.
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.setAttribute('data-revealed', 'true');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
+      );
+      document
+        .querySelectorAll('[data-reveal]')
+        .forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>

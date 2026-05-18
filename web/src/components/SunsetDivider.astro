@@ -1,0 +1,10 @@
+---
+// Decorative magenta-to-cyan gradient bar used between major page sections
+// to add visual rhythm. Non-interactive, aria-hidden. Includes a soft glow
+// behind the line so it reads as light, not a hairline.
+---
+
+<div aria-hidden="true" class="relative isolate">
+  <div class="mx-auto h-px max-w-7xl bg-[linear-gradient(to_right,transparent_0%,rgba(255,45,149,0.5)_38%,rgba(0,240,255,0.5)_62%,transparent_100%)]"></div>
+  <div class="pointer-events-none absolute inset-x-0 top-1/2 mx-auto h-12 max-w-3xl -translate-y-1/2 bg-[linear-gradient(to_right,transparent,rgba(255,45,149,0.18)_38%,rgba(0,240,255,0.18)_62%,transparent)] blur-2xl"></div>
+</div>

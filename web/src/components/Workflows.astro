@@ -1,0 +1,138 @@
+---
+// Five built-in workflow patterns the skill exposes. Each has a recognised
+// trigger phrase and a distinctive output shape. Cards link to the relevant
+// workflow doc on docs.artofinfra.com.
+
+type Workflow = {
+  name: string;
+  href: string;
+  accent: 'magenta' | 'cyan' | 'purple' | 'amber' | 'rose';
+  iconPath: string;
+  headline: string;
+  triggers: string[];
+  output: string;
+};
+
+const workflows: Workflow[] = [
+  {
+    name: 'Audit',
+    href: 'https://docs.artofinfra.com/workflows/audit.md',
+    accent: 'magenta',
+    iconPath: 'M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z',
+    headline: 'Review a config for issues',
+    triggers: ['"Review this config"', '"Audit for security issues"'],
+    output: 'Severity-sorted findings (Critical to Low) with cited rules and copy-pasteable fixes for each.',
+  },
+  {
+    name: 'Picker',
+    href: 'https://docs.artofinfra.com/workflows/picker.md',
+    accent: 'cyan',
+    iconPath: 'M3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM8.25 6.75h12M8.25 12h12m-12 5.25h12',
+    headline: 'Compare architectural options',
+    triggers: ['"What\'s the best way to do X"', '"Should I do A or B"'],
+    output: 'Three or four fleshed-out alternatives with tradeoff dimensions and a comparison table. Then asks you to pick.',
+  },
+  {
+    name: 'Diff',
+    href: 'https://docs.artofinfra.com/workflows/diff.md',
+    accent: 'purple',
+    iconPath: 'M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5',
+    headline: 'Compare two concrete configs',
+    triggers: ['"What changed between these"', '"Is this safe to push"'],
+    output: 'Risk-classified delta. Every change tagged Low to Critical, with a verify-command for the riskier ones.',
+  },
+  {
+    name: 'Document',
+    href: 'https://docs.artofinfra.com/workflows/document.md',
+    accent: 'amber',
+    iconPath: 'M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z',
+    headline: 'Generate a runbook from configs',
+    triggers: ['"Document this device"', '"Generate a runbook from these"'],
+    output: 'Role summary, interface table, routing summary, redacted secrets. Multi-device input adds a Mermaid topology graph.',
+  },
+  {
+    name: 'Validate',
+    href: 'https://docs.artofinfra.com/workflows/validate.md',
+    accent: 'rose',
+    iconPath: 'M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z',
+    headline: 'Verify a config matches intent',
+    triggers: ['"Does this implement X"', '"Verify this matches the design"'],
+    output: 'Claim-by-claim PASS / FAIL / PARTIAL with cited evidence (specific config lines) for each verdict.',
+  },
+];
+
+const accentText: Record<Workflow['accent'], string> = {
+  magenta: 'text-neon-magenta neon-magenta',
+  cyan: 'text-neon-cyan neon-cyan',
+  purple: 'text-neon-purple neon-purple',
+  amber: 'text-neon-amber neon-amber',
+  rose: 'text-neon-rose neon-rose',
+};
+
+const accentRing: Record<Workflow['accent'], string> = {
+  magenta: 'hover:ring-neon-magenta/40',
+  cyan: 'hover:ring-neon-cyan/40',
+  purple: 'hover:ring-neon-purple/40',
+  amber: 'hover:ring-neon-amber/40',
+  rose: 'hover:ring-neon-rose/40',
+};
+---
+
+<section class="border-t border-white/5 py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <p class="font-mono text-xs uppercase tracking-wide text-neon-cyan/80">
+      Workflows
+    </p>
+    <h2
+      class="mt-3 max-w-[28ch] font-display text-4xl font-semibold tracking-tight text-ink text-balance sm:text-5xl"
+    >
+      Five workflows. Each shapes the answer.
+    </h2>
+    <p class="mt-4 max-w-[58ch] text-pretty text-base text-ink-muted sm:text-lg">
+      Each has a trigger phrase the skill recognises and a reasoning shape it applies before reaching for topical rules. Pick the one that matches what you actually need.
+    </p>
+
+    <ul role="list" data-reveal class="mt-12 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {workflows.map((w) => (
+        <li>
+          <a
+            href={w.href}
+            class={`group flex h-full flex-col rounded-xl bg-bg-raised/70 p-6 ring-1 ring-inset ring-white/5 transition-transform duration-200 hover:-translate-y-0.5 sm:p-7 ${accentRing[w.accent]}`}
+          >
+            <div class="flex items-center gap-3">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                class={`size-6 shrink-0 ${accentText[w.accent]}`}
+              >
+                <path d={w.iconPath} />
+              </svg>
+              <h3 class={`font-mono text-sm uppercase tracking-wide ${accentText[w.accent]}`}>
+                {w.name}
+              </h3>
+            </div>
+
+            <p class="mt-5 font-display text-xl font-medium tracking-tight text-ink">
+              {w.headline}
+            </p>
+
+            <ul role="list" class="mt-5 space-y-1">
+              {w.triggers.map((t) => (
+                <li class="font-mono text-[12px] text-ink-dim">{t}</li>
+              ))}
+            </ul>
+
+            <p class="mt-5 max-w-[40ch] text-pretty text-sm text-ink-muted">
+              {w.output}
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

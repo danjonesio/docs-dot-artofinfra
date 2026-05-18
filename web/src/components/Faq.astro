@@ -1,0 +1,98 @@
+---
+// Reassurance section near the page bottom. Disclosure pattern using
+// native <details>/<summary> so it works without JS and stays compact
+// by default. Each question opens to its own answer; multiple can be
+// open at once.
+
+type Item = { q: string; a: string };
+
+const faqs: Item[] = [
+  {
+    q: 'Do you see my prompts or configs?',
+    a: "No. Your AI client fetches the docs directly from docs.artofinfra.com over HTTPS. There's no proxy in the middle. Cloudflare logs request paths (which docs were fetched) for hosting purposes, not the prompts that led to those fetches.",
+  },
+  {
+    q: 'Is this safe to use on production configs?',
+    a: 'The rules are opinionated, not authoritative. Always review AI-generated config before applying it to a production device. The audit, diff, and validate workflows are explicitly designed for pre-deploy safety. Treat the skill like a senior peer reviewer who has read your vendor docs, not like an autopilot.',
+  },
+  {
+    q: 'What if a rule is wrong?',
+    a: "Open an issue or PR on GitHub. The repo's content quality bar treats wrong rules like production bugs: self-verification against vendor docs is a contributor requirement, every PR goes through maintainer review, and once merged the corrected rule is live within minutes. Agents pick it up on their next fetch.",
+  },
+  {
+    q: 'Are you biased toward one vendor?',
+    a: "Cisco and Juniper today because those are documented. The skill itself doesn't push a vendor on you; if you ask for Junos, it loads Junos rules. New vendor coverage (Arista, MikroTik, FortiGate, Palo Alto, others) is explicitly welcomed via PR; see CONTRIBUTING.md.",
+  },
+  {
+    q: 'Who built this?',
+    a: 'Dan Jones, plus contributors. Open source side project, no company behind it, no commercial product. Built because no opinionated, AI-fetchable infra ruleset existed and one was overdue.',
+  },
+  {
+    q: "What's the business model?",
+    a: 'No business model. The skill is free, the docs are free, the hosting runs on Cloudflare\'s free tier. If you want to support the project, GitHub Sponsors is set up via .github/FUNDING.yml.',
+  },
+  {
+    q: 'Why MIT license?',
+    a: 'Permissive and well-understood. Anyone can use, fork, or redistribute the rules without ceremony. The same license covers both the markdown content and the small homepage build tooling, so there is one rule to remember.',
+  },
+  {
+    q: 'Does this work offline?',
+    a: 'No. The skill triggers an HTTPS fetch from docs.artofinfra.com on each invocation. Local caching could be added later if there is demand; for now, agents need network access.',
+  },
+];
+---
+
+<section class="relative overflow-hidden border-t border-white/5 py-20 sm:py-28">
+  <!-- Second atmosphere zone (mirrors the hero, anchors the page bottom) -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div class="sun-gradient absolute right-[10%] top-[20%] -z-10 h-72 w-72 rounded-full opacity-25 blur-3xl"></div>
+    <div class="grid-floor absolute inset-x-0 bottom-0 h-[55%] opacity-70"></div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div class="lg:sticky lg:top-24 lg:self-start">
+        <p class="font-mono text-xs uppercase tracking-wide text-neon-cyan/80">
+          FAQ
+        </p>
+        <h2
+          class="mt-3 max-w-[24ch] font-display text-4xl font-semibold tracking-tight text-ink text-balance sm:text-5xl"
+        >
+          Things infra engineers ask before installing.
+        </h2>
+        <p class="mt-4 max-w-[48ch] text-pretty text-base text-ink-muted sm:text-lg">
+          Eight legitimate concerns. Direct answers.
+        </p>
+      </div>
+
+      <ul role="list" class="divide-y divide-white/5 border-y border-white/5">
+        {faqs.map((item) => (
+          <li>
+            <details class="group">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden hover:text-neon-cyan">
+                <span class="font-display text-base font-medium tracking-tight text-ink sm:text-lg">
+                  {item.q}
+                </span>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  class="size-5 shrink-0 text-ink-dim transition-transform group-open:rotate-180"
+                >
+                  <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </summary>
+              <p class="pb-5 pr-12 text-pretty text-base text-ink-muted">
+                {item.a}
+              </p>
+            </details>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

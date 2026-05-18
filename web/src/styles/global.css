@@ -67,6 +67,11 @@
       0 0 8px rgba(251, 191, 36, 0.55),
       0 0 22px rgba(251, 191, 36, 0.25);
   }
+  .neon-rose {
+    text-shadow:
+      0 0 8px rgba(255, 93, 143, 0.55),
+      0 0 22px rgba(255, 93, 143, 0.25);
+  }
 
   /* Synthwave grid floor effect */
   .grid-floor {
@@ -110,6 +115,23 @@
   /* Hairline border using neon at low opacity */
   .ring-neon {
     box-shadow: inset 0 0 0 1px rgba(255, 45, 149, 0.25);
+  }
+}
+
+/* Scroll-triggered reveal. Default state hides + offsets the element;
+   the IntersectionObserver in Base.astro adds data-revealed when the
+   element enters the viewport, and the transition runs once.
+   Only applies when the user hasn't requested reduced motion;
+   reduced-motion users see elements in their final state immediately. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+  [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
