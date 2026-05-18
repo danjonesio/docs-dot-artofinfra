@@ -1,38 +1,38 @@
 /**
  * Cloudflare Worker entry for docs.artofinfra.com.
  *
- * Logs every fetch of a markdown doc to the self-hosted Umami
- * instance as a custom event, then hands off to the static asset
- * handler. Events show under Umami's "Events" tab alongside human
- * pageviews on the homepage, so AI-agent fetches do not inflate
- * pageview counts.
+ * Logs each .md fetch as a custom event to a Umami-compatible
+ * endpoint, then hands off to the static asset handler.
  *
- * Privacy: we forward only what Umami needs to parse the client:
- * pathname, user-agent, and the Cloudflare-derived client IP for
- * country lookup. No cookies, no request body (these are GETs).
+ * Config (set as runtime env vars in the Cloudflare dashboard under
+ * Workers > Settings > Variables and Secrets):
+ *   UMAMI_ENDPOINT   - Umami /api/send URL
+ *   UMAMI_WEBSITE_ID - Umami website UUID
+ * Both must be set for logging to fire; if unset, the Worker just
+ * passes through to assets (useful for staging or rollback).
  *
- * The Worker is invoked for every request because wrangler.jsonc
- * sets assets.run_worker_first: true. Non-markdown requests pass
- * straight through to the asset handler without any outbound call.
+ * Requires assets.run_worker_first: true in wrangler.jsonc so the
+ * Worker actually intercepts asset requests.
  */
-const UMAMI_ENDPOINT = 'https://mando.trfs.fyi/api/send';
-const UMAMI_WEBSITE_ID = '01577929-b895-4f56-ba16-1354702a38ae';
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    if (url.pathname.endsWith('.md')) {
-      ctx.waitUntil(logToUmami(request, url));
+    if (
+      url.pathname.endsWith('.md') &&
+      env.UMAMI_ENDPOINT &&
+      env.UMAMI_WEBSITE_ID
+    ) {
+      ctx.waitUntil(logToUmami(request, url, env));
     }
 
     return env.ASSETS.fetch(request);
   },
 };
 
-async function logToUmami(request, url) {
+async function logToUmami(request, url, env) {
   try {
-    await fetch(UMAMI_ENDPOINT, {
+    await fetch(env.UMAMI_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ async function logToUmami(request, url) {
       body: JSON.stringify({
         type: 'event',
         payload: {
-          website: UMAMI_WEBSITE_ID,
+          website: env.UMAMI_WEBSITE_ID,
           hostname: url.hostname,
           url: url.pathname,
           name: 'doc_fetch',
