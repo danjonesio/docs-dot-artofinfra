@@ -21,3 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.log
+
+# Local-only working scratch (planning notes, punch lists, etc.)
+plan.md
