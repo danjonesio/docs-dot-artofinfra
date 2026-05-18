@@ -48,10 +48,24 @@ async function logToUmami(request, url, env) {
           hostname: url.hostname,
           url: url.pathname,
           name: 'doc_fetch',
+          // Surface path + category as event properties so the Umami
+          // Properties tab shows aggregate counts per doc and per
+          // section (cisco, juniper, general, etc.).
+          data: {
+            path: url.pathname,
+            category: categoryOf(url.pathname),
+          },
         },
       }),
     });
   } catch {
     // Logging failures must never break the response.
   }
+}
+
+// First path segment, e.g. /cisco/ios-xe.md -> "cisco", /router.md -> "router".
+function categoryOf(pathname) {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length <= 1) return segments[0]?.replace(/\.md$/, '') || 'root';
+  return segments[0];
 }
