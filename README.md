@@ -42,6 +42,25 @@ Three levels:
 - `{category}/index.md`: list of docs in a category
 - `{category}/{topic}.md`: opinionated rules
 
+## Self-host
+
+Two reasons to self-host: offline use, or you want to layer in your own private rules without forking publicly.
+
+1. Clone the repo:
+
+   ```bash
+   git clone https://github.com/danjonesio/docs-dot-artofinfra.git
+   ```
+
+2. Pick a SKILL template under `skills/{agent}/` and edit it to point at your local docs path. Replace every `https://docs.artofinfra.com` occurrence with either:
+
+   - A `file://` URL: `file:///absolute/path/to/docs-dot-artofinfra/docs`, or
+   - A local server URL: run `npx serve docs/` from the repo root and use `http://localhost:3000`
+
+3. Install the edited SKILL file into your agent's conventional path (see the table above), or run `npx @artofinfra/install` and then overwrite the installed file with your edited version.
+
+Your agent now fetches rules from your local copy. `git pull` to take updates. Drop your own `.md` files into `docs/{category}/` to add private rules alongside the public ones.
+
 ## Community
 
 Discord: <https://discord.artofinfra.com>. Questions, suggestions, war stories from real networks, or help with the skill itself, that's where to ask.

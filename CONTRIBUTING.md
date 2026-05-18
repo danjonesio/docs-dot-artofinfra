@@ -115,7 +115,7 @@ A maintainer will also update the homepage's `Coverage` section so the new categ
 - Expect requests for tightening, not rejection. Vague PRs may get questions like "is this a hard rule or a suggestion?"
 - Once merged to `main`, the docs are live at `https://docs.artofinfra.com/...` within minutes. AI clients pick up the new rules on their next fetch.
 
-If you want to preview your own changes locally before opening the PR, you can build the homepage and the docs together: `cd web && npm install && npm run dev`. Your changes appear at `http://localhost:4321/{category}/{topic}.md`. This is local-only and gives you a fast iteration loop without exposing anything publicly.
+To preview formatting before opening a PR, use whatever markdown preview your editor already has (VSCode's preview pane, GitHub's "Preview" tab on the PR, etc.). No build step needed.
 
 ## Questions
 
