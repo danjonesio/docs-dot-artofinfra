@@ -148,9 +148,19 @@ npm run preview     # serves web/dist/ statically for a final check
 
 Theming lives in `web/tailwind.config.mjs` (palette: `bg`, `ink`, `neon-*`) and `web/src/styles/global.css` (CRT overlay, neon glow utilities, sun/grid backgrounds). Component conventions follow the project-wide UI guidelines: left-aligned heading groups by default, `font-semibold`/`font-medium` on headings (never `font-bold`), `tracking-tight` on anything larger than `text-xl`, no `text-xs` for body, body min `text-base` on mobile.
 
-## Future: installer
+## Installer (`@artofinfra/install`)
 
-Not built yet. Will be `npx @artofinfra/install` that detects the user's agent and writes the right SKILL file at the right path. Until then, the homepage's Install section is the install. Copy-paste each agent's tab into the target path it shows.
+Source lives in `cli/`. Published to the npm registry as `@artofinfra/install`. Users run `npx @artofinfra/install` for an interactive picker that writes the matching SKILL file to its conventional path under cwd.
+
+When SKILL files change in `skills/{agent}/`, bump the CLI version and re-publish:
+
+```bash
+cd cli
+npm version patch
+npm publish
+```
+
+The `prepublishOnly` script regenerates `cli/lib/skills.js` from the current SKILL files, so the published package always reflects what's in source. `cli/lib/` is gitignored.
 
 ## Hard rules
 

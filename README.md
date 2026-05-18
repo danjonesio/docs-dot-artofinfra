@@ -6,7 +6,13 @@ Hosted at https://docs.artofinfra.com. Companion to the [Art of Infra blog](http
 
 ## Install
 
-Skill templates for Claude Code, Cursor, Codex, OpenCode, and Amp live in `skills/`. Copy the appropriate file into your agent's skills directory:
+```bash
+npx @artofinfra/install
+```
+
+Interactive picker; asks which agent(s) you want and writes the matching SKILL file to the right path.
+
+Or copy-paste manually from `skills/`:
 
 | Agent | Path |
 | --- | --- |
@@ -15,8 +21,6 @@ Skill templates for Claude Code, Cursor, Codex, OpenCode, and Amp live in `skill
 | Codex | `.codex/skills/artofinfra/SKILL.md` |
 | OpenCode | `.opencode/skills/artofinfra/SKILL.md` |
 | Amp | `.amp/skills/artofinfra/SKILL.md` |
-
-An `npx @artofinfra/install` CLI is planned. For now, copy-paste.
 
 ## Use
 
