@@ -13,6 +13,10 @@
  *
  * Requires assets.run_worker_first: true in wrangler.jsonc so the
  * Worker actually intercepts asset requests.
+ *
+ * The outbound POST to Umami uses a static browser-shaped User-Agent
+ * (ArtOfInfraWorker) so Umami's global bot filter accepts the event.
+ * The real AI client UA travels in payload.data.client.
  */
 export default {
   async fetch(request, env, ctx) {
@@ -36,9 +40,12 @@ async function logToUmami(request, url, env) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Forward the real client headers so Umami's UA/geo parsing
-        // sees the AI agent, not the Worker's edge IP.
-        'User-Agent': request.headers.get('user-agent') || 'unknown',
+        // Send a browser-shaped UA so Umami's global bot filter accepts
+        // the event. AI clients (Claude-User, Cursor, etc.) match bot
+        // patterns and would be silently dropped otherwise. The real
+        // client UA is preserved in payload.data.client below.
+        'User-Agent':
+          'Mozilla/5.0 (compatible; ArtOfInfraWorker/1.0; +https://docs.artofinfra.com)',
         'X-Forwarded-For': request.headers.get('cf-connecting-ip') || '',
       },
       body: JSON.stringify({
@@ -48,12 +55,13 @@ async function logToUmami(request, url, env) {
           hostname: url.hostname,
           url: url.pathname,
           name: 'doc_fetch',
-          // Surface path + category as event properties so the Umami
-          // Properties tab shows aggregate counts per doc and per
-          // section (cisco, juniper, general, etc.).
+          // Surface path, category, and the real client UA as event
+          // properties so the Umami Properties tab shows aggregate
+          // counts per doc, per section, and per AI client.
           data: {
             path: url.pathname,
             category: categoryOf(url.pathname),
+            client: request.headers.get('user-agent') || 'unknown',
           },
         },
       }),
