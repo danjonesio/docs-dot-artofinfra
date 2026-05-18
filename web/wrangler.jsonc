@@ -3,6 +3,7 @@
   "name": "docs-dot-artofinfra",
   "compatibility_date": "2026-05-17",
   "main": "./worker.js",
+  "keep_vars": true,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
