@@ -14,9 +14,11 @@
  * Requires assets.run_worker_first: true in wrangler.jsonc so the
  * Worker actually intercepts asset requests.
  *
- * The outbound POST to Umami uses a static browser-shaped User-Agent
- * (ArtOfInfraWorker) so Umami's global bot filter accepts the event.
- * The real AI client UA travels in payload.data.client.
+ * The outbound POST to Umami uses a static real-browser User-Agent
+ * so Umami's global bot filter accepts the event. The real AI client
+ * UA travels in payload.data.client. A custom-product UA like
+ * "Mozilla/5.0 (compatible; X/1.0)" gets bot-filtered because it
+ * matches the Googlebot UA shape, so we send a real Chrome string.
  */
 export default {
   async fetch(request, env, ctx) {
@@ -40,12 +42,13 @@ async function logToUmami(request, url, env) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Send a browser-shaped UA so Umami's global bot filter accepts
-        // the event. AI clients (Claude-User, Cursor, etc.) match bot
-        // patterns and would be silently dropped otherwise. The real
-        // client UA is preserved in payload.data.client below.
+        // Send a real Chrome UA so Umami's global bot filter accepts
+        // the event. AI client UAs (Claude-User, Cursor, etc.) and
+        // custom-product UAs (anything shaped like "Mozilla/5.0
+        // (compatible; X/1.0)") all get bot-filtered. The real client
+        // UA is preserved in payload.data.client below.
         'User-Agent':
-          'Mozilla/5.0 (compatible; ArtOfInfraWorker/1.0; +https://docs.artofinfra.com)',
+          'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         'X-Forwarded-For': request.headers.get('cf-connecting-ip') || '',
       },
       body: JSON.stringify({
