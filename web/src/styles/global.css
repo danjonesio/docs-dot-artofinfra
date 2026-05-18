@@ -118,6 +118,23 @@
   }
 }
 
+/* Scroll-triggered reveal. Default state hides + offsets the element;
+   the IntersectionObserver in Base.astro adds data-revealed when the
+   element enters the viewport, and the transition runs once.
+   Only applies when the user hasn't requested reduced motion;
+   reduced-motion users see elements in their final state immediately. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+  [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

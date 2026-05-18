@@ -79,12 +79,12 @@ const accentText: Record<string, string> = {
       Every rule is opinionated and short. No exhaustive reference, that's the vendor's job. This is "do this, not that" for engineers shipping real networks.
     </p>
 
-    <ul role="list" class="mt-12 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul role="list" data-reveal class="mt-12 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {categories.map((c) => (
         <li>
           <a
             href={c.href}
-            class={`group block h-full rounded-xl bg-bg-raised/70 p-6 ring-1 ring-inset ring-white/5 sm:p-7 ${accentRing[c.accent]}`}
+            class={`group block h-full rounded-xl bg-bg-raised/70 p-6 ring-1 ring-inset ring-white/5 transition-transform duration-200 hover:-translate-y-0.5 sm:p-7 ${accentRing[c.accent]}`}
           >
             <h3 class={`font-display text-lg font-medium tracking-tight ${accentText[c.accent]}`}>
               {c.name}

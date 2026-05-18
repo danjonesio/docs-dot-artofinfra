@@ -57,7 +57,7 @@ const examples: Example[] = [
       Linked prompts open a real session showing the AI's actual output with the skill loaded.
     </p>
 
-    <ul role="list" class="mt-12 grid gap-3 sm:gap-4 sm:grid-cols-2">
+    <ul role="list" data-reveal class="mt-12 grid gap-3 sm:gap-4 sm:grid-cols-2">
       {examples.map((e) => (
         <li>
           {e.share ? (
@@ -65,7 +65,7 @@ const examples: Example[] = [
               href={e.share}
               target="_blank"
               rel="noopener noreferrer"
-              class="group relative flex h-full items-start gap-3 rounded-lg bg-bg-raised/50 p-4 ring-1 ring-inset ring-white/5 hover:bg-bg-raised hover:ring-neon-magenta/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon-magenta"
+              class="group relative flex h-full items-start gap-3 rounded-lg bg-bg-raised/50 p-4 ring-1 ring-inset ring-white/5 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-bg-raised hover:ring-neon-magenta/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon-magenta"
             >
               <span class="mt-0.5 font-mono text-xs text-neon-magenta neon-magenta shrink-0">/artofinfra</span>
               <span class="flex flex-1 min-w-0 flex-col">

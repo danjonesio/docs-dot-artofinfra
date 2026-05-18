@@ -92,12 +92,12 @@ const accentRing: Record<Workflow['accent'], string> = {
       Each has a trigger phrase the skill recognises and a reasoning shape it applies before reaching for topical rules. Pick the one that matches what you actually need.
     </p>
 
-    <ul role="list" class="mt-12 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <ul role="list" data-reveal class="mt-12 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {workflows.map((w) => (
         <li>
           <a
             href={w.href}
-            class={`group flex h-full flex-col rounded-xl bg-bg-raised/70 p-6 ring-1 ring-inset ring-white/5 sm:p-7 ${accentRing[w.accent]}`}
+            class={`group flex h-full flex-col rounded-xl bg-bg-raised/70 p-6 ring-1 ring-inset ring-white/5 transition-transform duration-200 hover:-translate-y-0.5 sm:p-7 ${accentRing[w.accent]}`}
           >
             <div class="flex items-center gap-3">
               <svg
