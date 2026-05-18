@@ -1,13 +1,27 @@
 ---
 import Logo from './Logo.astro';
 
-const examples = [
-  'Configure BGP between two Junos MX routers with bidirectional MD5 auth',
-  'Audit this IOS-XE config and flag any security issues',
-  'Set up VXLAN EVPN fabric on Nexus 9000',
-  'Write an Ansible role that pushes ACLs to all distribution switches',
-  'Model our campus VLANs in NetBox with the right relationships',
-  'Why is OSPF flapping between these two routers?',
+// Example prompts. When a `share` URL is set, the prompt becomes a link
+// to a real OpenCode session showing what the AI actually produces with
+// the skill installed. `model` shows which model ran the session, so
+// readers can see we're not cherry-picking a single proprietary model.
+type Example = {
+  prompt: string;
+  share?: string;
+  model?: string;
+};
+
+const examples: Example[] = [
+  {
+    prompt: 'Configure BGP between two Junos MX routers with bidirectional MD5 auth',
+    share: 'https://opncd.ai/share/RLpisZqc',
+    model: 'DeepSeek V4 Pro',
+  },
+  { prompt: 'Audit this IOS-XE config and flag any security issues' },
+  { prompt: 'Set up VXLAN EVPN fabric on Nexus 9000' },
+  { prompt: 'Write an Ansible role that pushes ACLs to all distribution switches' },
+  { prompt: 'Model our campus VLANs in NetBox with the right relationships' },
+  { prompt: 'Why is OSPF flapping between these two routers?' },
 ];
 ---
 
@@ -21,12 +35,40 @@ const examples = [
     >
       What it answers well.
     </h2>
+    <p class="mt-4 max-w-[58ch] text-pretty text-base text-ink-muted sm:text-lg">
+      Linked prompts open a real session showing the AI's actual output with the skill loaded.
+    </p>
 
     <ul role="list" class="mt-12 grid gap-3 sm:gap-4 sm:grid-cols-2">
       {examples.map((e) => (
-        <li class="flex items-start gap-3 rounded-lg bg-bg-raised/50 p-4 ring-1 ring-inset ring-white/5">
-          <span class="mt-0.5 font-mono text-xs text-neon-magenta neon-magenta">/artofinfra</span>
-          <span class="font-mono text-[13px] text-ink/85">{e}</span>
+        <li>
+          {e.share ? (
+            <a
+              href={e.share}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group relative flex items-start gap-3 rounded-lg bg-bg-raised/50 p-4 ring-1 ring-inset ring-white/5 hover:bg-bg-raised hover:ring-neon-magenta/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neon-magenta"
+            >
+              <span class="mt-0.5 font-mono text-xs text-neon-magenta neon-magenta shrink-0">/artofinfra</span>
+              <span class="flex-1 min-w-0">
+                <span class="block font-mono text-[13px] text-ink/85">{e.prompt}</span>
+                {e.model && (
+                  <span class="mt-1 block font-mono text-[11px] uppercase tracking-wide text-neon-cyan/70">
+                    Live session, via {e.model}
+                  </span>
+                )}
+              </span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4 shrink-0 text-ink-dim transition-colors group-hover:text-neon-magenta" aria-hidden="true">
+                <path d="M7 7h10v10"/>
+                <path d="M7 17 17 7"/>
+              </svg>
+            </a>
+          ) : (
+            <div class="flex items-start gap-3 rounded-lg bg-bg-raised/50 p-4 ring-1 ring-inset ring-white/5">
+              <span class="mt-0.5 font-mono text-xs text-neon-magenta neon-magenta shrink-0">/artofinfra</span>
+              <span class="font-mono text-[13px] text-ink/85">{e.prompt}</span>
+            </div>
+          )}
         </li>
       ))}
     </ul>
