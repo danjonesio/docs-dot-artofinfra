@@ -67,6 +67,11 @@
       0 0 8px rgba(251, 191, 36, 0.55),
       0 0 22px rgba(251, 191, 36, 0.25);
   }
+  .neon-rose {
+    text-shadow:
+      0 0 8px rgba(255, 93, 143, 0.55),
+      0 0 22px rgba(255, 93, 143, 0.25);
+  }
 
   /* Synthwave grid floor effect */
   .grid-floor {
