@@ -79,6 +79,8 @@ The Cloudflare Pages project is configured with:
 
 `npm run build` (run from `web/`) produces `web/dist/index.html` (the homepage) plus a verbatim copy of every file under `docs/`: `_headers`, `_redirects`, `router.md`, and all category content. The AI fetch URL contract (`/router.md`, `/cisco/ios-xe.md`, etc.) is preserved.
 
+`web/worker.js` is a tiny pass-through Worker that logs `.md` fetches to a Workers Analytics Engine dataset. Comments in the file explain what's logged and why; analytics querying is operational, not a codebase concern.
+
 ## Adding a new doc
 
 1. Pick or create a category folder under `docs/` (e.g. `docs/cisco/`)

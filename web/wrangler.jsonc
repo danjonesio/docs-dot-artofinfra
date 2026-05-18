@@ -2,7 +2,18 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "docs-dot-artofinfra",
   "compatibility_date": "2026-05-17",
+  "main": "./worker.js",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  "analytics_engine_datasets": [
+    {
+      "binding": "DOC_FETCHES",
+      "dataset": "doc_fetches"
+    }
+  ],
+  "observability": {
+    "enabled": true
   }
 }
