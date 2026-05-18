@@ -1,0 +1,51 @@
+{
+  "name": "@artofinfra/install",
+  "version": "0.1.0",
+  "description": "Interactive installer for the Art of Infra AI skill (Claude Code, Cursor, Codex, OpenCode, Amp).",
+  "type": "module",
+  "bin": {
+    "artofinfra-install": "./bin/artofinfra-install.js"
+  },
+  "scripts": {
+    "build": "node scripts/build-skills.js",
+    "prepublishOnly": "npm run build",
+    "smoke": "npm run build && node bin/artofinfra-install.js --help"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0"
+  },
+  "keywords": [
+    "artofinfra",
+    "skill",
+    "ai",
+    "networking",
+    "infrastructure",
+    "cisco",
+    "juniper",
+    "netbox",
+    "cli"
+  ],
+  "homepage": "https://docs.artofinfra.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danjonesio/docs-dot-artofinfra.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/danjonesio/docs-dot-artofinfra/issues"
+  },
+  "license": "MIT",
+  "author": "Dan Jones",
+  "publishConfig": {
+    "access": "public"
+  }
+}
