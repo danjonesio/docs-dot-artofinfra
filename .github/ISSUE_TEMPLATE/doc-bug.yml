@@ -1,0 +1,76 @@
+name: "Doc bug: wrong or outdated rule"
+description: A rule in an existing doc is wrong, uses deprecated syntax, or doesn't work on a current platform version.
+title: "Doc bug: "
+labels: ["bug", "content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for flagging this. Wrong rules in this repo become wrong configs in real networks, so we take doc bugs as seriously as production bugs. Please include enough detail that a maintainer (or you, if you'd like to PR the fix) can verify the issue without guesswork.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Which area of the docs?
+      options:
+        - cisco
+        - juniper
+        - general (BGP, OSPF, VXLAN, ACLs, QoS, hardening)
+        - iac (Terraform, Ansible, Nornir)
+        - python (Netmiko, Scrapli, Jinja)
+        - netbox
+        - workflows
+    validations:
+      required: true
+
+  - type: input
+    id: doc
+    attributes:
+      label: Specific doc
+      description: 'Filename or URL of the doc, e.g. `cisco/ios-xe.md` or `https://docs.artofinfra.com/general/bgp.md`'
+      placeholder: cisco/ios-xe.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: rule
+    attributes:
+      label: The rule that's wrong
+      description: Quote the exact line or rule from the doc.
+      placeholder: |
+        "Always use `enable algorithm-type scrypt secret`"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong with it
+      description: Wrong syntax, deprecated, doesn't apply to this platform version, factually incorrect, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: correct
+    attributes:
+      label: What it should be
+      description: Proposed correction. Include a vendor doc link or other authoritative source if possible.
+    validations:
+      required: false
+
+  - type: input
+    id: platform
+    attributes:
+      label: Platform / version tested
+      description: Where you reproduced the issue. e.g. "IOS-XE 17.9.4a on Catalyst 9300", "Junos 22.4R3 on MX204".
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Optional
+      options:
+        - label: I'm willing to open a PR with the fix
+          required: false

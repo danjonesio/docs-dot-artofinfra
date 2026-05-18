@@ -1,0 +1,57 @@
+name: "Installer bug (@artofinfra/install)"
+description: "`npx @artofinfra/install` did something unexpected, crashed, or wrote files in the wrong place."
+title: "Installer: "
+labels: ["bug", "installer"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Sorry it didn't work. The installer is small enough that most issues are reproducible with a clear command + environment description.
+
+  - type: input
+    id: command
+    attributes:
+      label: Command you ran
+      placeholder: npx @artofinfra/install
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system + version
+      placeholder: macOS 15.3 / Ubuntu 24.04 / Windows 11 (WSL2)
+    validations:
+      required: true
+
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      description: Output of `node --version`.
+      placeholder: v20.18.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected to happen
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Include any error output verbatim. Paste it in a code block.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else worth knowing
+      description: Existing files in the target path, unusual filesystem (Docker, network mount), corporate proxy, etc.
+    validations:
+      required: false
