@@ -5,14 +5,9 @@
   "main": "./worker.js",
   "assets": {
     "directory": "./dist",
-    "binding": "ASSETS"
+    "binding": "ASSETS",
+    "run_worker_first": true
   },
-  "analytics_engine_datasets": [
-    {
-      "binding": "DOC_FETCHES",
-      "dataset": "doc_fetches"
-    }
-  ],
   "observability": {
     "enabled": true
   }
