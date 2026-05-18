@@ -79,6 +79,21 @@ The Cloudflare Pages project is configured with:
 
 `npm run build` (run from `web/`) produces `web/dist/index.html` (the homepage) plus a verbatim copy of every file under `docs/`: `_headers`, `_redirects`, `router.md`, and all category content. The AI fetch URL contract (`/router.md`, `/cisco/ios-xe.md`, etc.) is preserved.
 
+## Analytics for doc fetches
+
+The Worker (`web/worker.js`) logs every `.md` fetch to a Workers Analytics Engine dataset called `doc_fetches`. Each data point records pathname, user-agent, referer, and country. Non-markdown requests (homepage, images, CSS) pass straight through with no logging.
+
+This is the only way to see AI traffic, since AI clients fetch markdown directly without executing the JS beacon used by Cloudflare Web Analytics on the homepage.
+
+Querying the data:
+
+- **Dashboard**: Cloudflare → Account → Analytics → Analytics Engine → `doc_fetches`. Has a UI for top-N queries by blob.
+- **GraphQL API**: programmatic queries via `https://api.cloudflare.com/client/v4/graphql`. Needs an API token with `Account Analytics: Read` scope. Schema reference: <https://developers.cloudflare.com/analytics/graphql-api/>.
+
+Example aggregation: "most-fetched docs in the last 7 days, grouped by pathname (blob1)" — query `doc_fetchesAdaptiveGroups` filtering on `datetime_geq` and grouping by `blob1`.
+
+Free tier: 100K writes per day. The Worker also has `observability.enabled: true` which gives free Workers Logs (real-time `wrangler tail` for live debugging).
+
 ## Adding a new doc
 
 1. Pick or create a category folder under `docs/` (e.g. `docs/cisco/`)
