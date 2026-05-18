@@ -1,0 +1,63 @@
+name: "New rule for an existing doc"
+description: Propose a rule that should be added to a doc we already have.
+title: "New rule: "
+labels: ["enhancement", "content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Rules should be opinionated and short ("do this, not that"). If the proposed rule is more nuanced than a one-liner, that might be a sign it belongs in a different doc or as its own section.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - cisco
+        - juniper
+        - general
+        - iac
+        - python
+        - netbox
+        - workflows
+    validations:
+      required: true
+
+  - type: input
+    id: doc
+    attributes:
+      label: Which doc
+      placeholder: cisco/ios-xe.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: rule
+    attributes:
+      label: Proposed rule
+      description: One-line imperative statement. Include the config snippet if applicable.
+      placeholder: |
+        Always set `bgp graceful-restart` on eBGP peers for planned maintenance.
+
+        ```cisco
+        router bgp 65000
+          bgp graceful-restart
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: reasoning
+    attributes:
+      label: Why this rule
+      description: What problem does it prevent or solve? A reference to vendor docs or a real-world incident helps.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Optional
+      options:
+        - label: I'm willing to open the PR
+          required: false

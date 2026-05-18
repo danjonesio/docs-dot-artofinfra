@@ -1,0 +1,50 @@
+name: "Vendor coverage request"
+description: Request rules for a vendor or platform that isn't currently in the docs.
+title: "Vendor coverage: "
+labels: ["enhancement", "vendor-coverage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Coverage grows when real engineers ask for it. Tell us what vendor / platform you want documented and roughly what you'd want to see covered first. This helps prioritize.
+
+  - type: input
+    id: vendor
+    attributes:
+      label: Vendor and platform
+      description: Be specific. "Arista EOS on 7280R", "MikroTik RouterOS v7", "FortiGate FortiOS 7.4".
+      placeholder: Arista EOS on 7280R / 7050X
+    validations:
+      required: true
+
+  - type: textarea
+    id: priority-topics
+    attributes:
+      label: What you'd want covered first
+      description: |
+        Which topics matter most for your environment? Examples: device hardening, BGP, MLAG/MC-LAG, VXLAN EVPN, IS-IS, OSPF, ACLs, QoS, AAA, NTP, logging, automation integration (Ansible/Nornir modules, NetBox plugin, etc.).
+      placeholder: |
+        - Hardening baseline
+        - VXLAN EVPN (we run a leaf-spine fabric)
+        - BGP design rules for spine-leaf
+    validations:
+      required: true
+
+  - type: textarea
+    id: deployment
+    attributes:
+      label: How widely is this deployed in your environment
+      description: Rough signal of demand. Doesn't have to be precise. "Several hundred switches across two DCs" beats "we have some of these somewhere".
+      placeholder: ~200 switches across two DCs, plus a smaller campus deployment.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Optional
+      options:
+        - label: I'm willing to draft the initial doc(s) myself
+          required: false
+        - label: I can review a draft for accuracy
+          required: false

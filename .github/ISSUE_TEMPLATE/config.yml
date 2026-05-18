@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Community Discord
+    url: https://discord.artofinfra.com
+    about: For general questions, "how do I..." discussions, or showing off configs. Open an issue here only for bugs and feature requests.
+  - name: Documentation
+    url: https://docs.artofinfra.com
+    about: The docs themselves. Before filing a doc bug, check the latest version of the rule on the live site.
