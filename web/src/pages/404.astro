@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="404: Not found - Art of Infra"
+  description="The page or doc you're looking for doesn't exist. Head back to the router or browse the categories."
+>
+  <Header />
+  <main class="mx-auto flex min-h-[60vh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center lg:px-8">
+    <p class="font-mono text-sm uppercase tracking-widest text-neon-magenta neon-magenta">
+      404 - not found
+    </p>
+    <h1 class="mt-6 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+      No rule lives at this path.
+    </h1>
+    <p class="mt-4 max-w-prose text-base text-ink-muted sm:text-lg">
+      The URL you hit doesn't match a doc or any other route on
+      <code class="font-mono text-ink">docs.artofinfra.com</code>. If you
+      followed a link from somewhere and expected content here, let us know.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+      <a
+        href="/"
+        class="rounded-md border border-neon-magenta/40 bg-neon-magenta/10 px-4 py-2 text-sm font-medium text-ink hover:bg-neon-magenta/20"
+      >
+        Back to homepage
+      </a>
+      <a
+        href="/router.md"
+        class="rounded-md border border-ink/15 px-4 py-2 text-sm font-medium text-ink-muted hover:border-ink/30 hover:text-ink"
+      >
+        Browse the docs
+      </a>
+    </div>
+  </main>
+  <Footer />
+</Base>
