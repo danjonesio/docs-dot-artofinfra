@@ -16,7 +16,7 @@ Security-specific rules for SRX Series firewalls. For general Junos patterns, se
 
 - Use source NAT with interface-based PAT for outbound traffic:
 
-```
+```junos
 security nat source {
     rule-set OUTBOUND {
         from zone trust;
@@ -37,7 +37,7 @@ security nat source {
 
 - Enable screens on the `untrust` zone:
 
-```
+```junos
 security screen ids-option UNTRUST-SCREEN {
     icmp { ping-death; }
     ip { source-route-option; tear-drop; }

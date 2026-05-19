@@ -16,7 +16,7 @@ Opinionated rules for Junos OS platforms (MX, QFX, EX, SRX). These cover the OS-
 - Use `set` commands for scriptable/automatable config: use `edit` mode for interactive work
 - Use `groups` and `apply-groups` for config inheritance across interfaces/protocols:
 
-```
+```junos
 groups {
     EDGE-INTERFACES {
         interfaces {
@@ -38,7 +38,7 @@ apply-groups EDGE-INTERFACES;
 
 - Use `apply-path` in prefix-lists to auto-populate from config:
 
-```
+```junos
 policy-options {
     prefix-list BGP-NEIGHBORS {
         apply-path "protocols bgp group <*> neighbor <*>";

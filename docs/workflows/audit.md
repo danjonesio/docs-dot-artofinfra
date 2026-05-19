@@ -30,12 +30,7 @@ Always load:
 - The vendor / platform doc, e.g. `https://docs.artofinfra.com/cisco/ios-xe.md`, `https://docs.artofinfra.com/juniper/junos.md`
 - `https://docs.artofinfra.com/general/hardening.md` (the security baseline applies to almost every audit)
 
-Load conditionally based on what the config contains:
-
-- If routing protocols are configured: `https://docs.artofinfra.com/general/bgp.md`, `https://docs.artofinfra.com/general/ospf.md` as relevant
-- If ACLs are present: `https://docs.artofinfra.com/general/acl-design.md`
-- If QoS is present: `https://docs.artofinfra.com/general/qos.md`
-- If VXLAN/EVPN is present: `https://docs.artofinfra.com/general/vxlan.md`
+Load topical docs that match what's in the config. Consult `https://docs.artofinfra.com/general/index.md` and load every general doc whose topic appears in the config (routing protocols, ACLs, QoS, EVPN, fabric design, etc.).
 
 If the config spans multiple roles (edge router with firewall ACLs, etc.), load all relevant general docs. Do not skip a doc because you "already know" the rules. Explicit grounding produces more accurate findings.
 

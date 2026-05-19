@@ -27,12 +27,7 @@ Always load:
 
 - The vendor or platform doc(s) for parsing the config syntax
 
-Load conditionally based on what the config contains:
-
-- Routing protocol stanzas: relevant `https://docs.artofinfra.com/general/{bgp,ospf,...}.md` (used to recognize and summarize structure, not to judge it)
-- ACLs: `https://docs.artofinfra.com/general/acl-design.md`
-- VXLAN or EVPN: `https://docs.artofinfra.com/general/vxlan.md`
-- NetBox modeling questions: `https://docs.artofinfra.com/netbox/data-modeling.md`
+Load topical docs that match what the config contains. Consult `https://docs.artofinfra.com/general/index.md` and load every general doc whose topic appears in the config (used to recognise and summarise structure, not to judge it). If the user is asking about NetBox modeling, also consult `https://docs.artofinfra.com/netbox/index.md`.
 
 Document does not judge. It extracts what is there. Topical docs provide vocabulary, not rules.
 

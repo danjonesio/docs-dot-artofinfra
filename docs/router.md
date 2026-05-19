@@ -31,11 +31,11 @@ Keep the introduction conversational and brief. The user knows what they want; h
 ### Vendor platforms
 
 - [Cisco](https://docs.artofinfra.com/cisco/index.md): Cisco platforms (IOS-XE, NX-OS, ASA)
-- [Juniper](https://docs.artofinfra.com/juniper/index.md): Juniper platforms (Junos, SRX)
+- [Juniper](https://docs.artofinfra.com/juniper/index.md): Juniper platforms (Junos, SRX, MX)
 
 ### Cross-vendor topics
 
-- [General](https://docs.artofinfra.com/general/index.md): Vendor-agnostic networking (BGP, OSPF, VXLAN, ACLs, QoS, hardening)
+- [General](https://docs.artofinfra.com/general/index.md): Vendor-agnostic networking (BGP, OSPF, EVPN, ACLs, QoS, hardening)
 
 ### Automation & IaC
 
@@ -61,7 +61,7 @@ Each workflow doc has its own activation rules and trigger phrases. The workflow
 |---|---|
 | "Harden a Cisco Catalyst switch" | `https://docs.artofinfra.com/general/hardening.md`, `https://docs.artofinfra.com/cisco/ios-xe.md` |
 | "Configure BGP on Juniper MX" | `https://docs.artofinfra.com/general/bgp.md`, `https://docs.artofinfra.com/juniper/junos.md` |
-| "Set up VXLAN EVPN fabric on Nexus" | `https://docs.artofinfra.com/general/vxlan.md`, `https://docs.artofinfra.com/cisco/nxos.md` |
+| "Set up VXLAN EVPN fabric on Nexus" | `https://docs.artofinfra.com/general/evpn.md`, `https://docs.artofinfra.com/general/evpn-vxlan.md`, `https://docs.artofinfra.com/cisco/nxos.md` |
 | "Write an Ansible playbook to deploy ACLs" | `https://docs.artofinfra.com/iac/ansible.md`, `https://docs.artofinfra.com/general/acl-design.md` |
 | "Model our campus network in NetBox" | `https://docs.artofinfra.com/netbox/data-modeling.md` |
 | "Automate config backups with Nornir and Scrapli" | `https://docs.artofinfra.com/iac/nornir.md`, `https://docs.artofinfra.com/python/scrapli.md` |
