@@ -42,10 +42,11 @@ Opinionated rules for NX-OS platforms (Nexus 3000/5000/7000/9000). Data centre f
 
 ## VXLAN / EVPN (Nexus 9000)
 
-- Use BGP EVPN control plane: never flood-and-learn in production
+For transport-agnostic EVPN concepts (route types, multihoming, MAC mobility, symmetric IRB), see `https://docs.artofinfra.com/general/evpn.md`. For VXLAN underlay, VTEP, and VNI design, see `https://docs.artofinfra.com/general/evpn-vxlan.md`. Nexus-specific syntax:
+
 - Set `nv overlay evpn` and `feature nv overlay`
 - Use `suppress-arp` in NVE interface config to reduce BUM traffic
-- Always configure anycast gateway: `fabric forwarding anycast-gateway-mac`
+- Always configure anycast gateway: `fabric forwarding anycast-gateway-mac <mac>`
 - Use route-type 5 for external routing with `advertise l2vpn evpn` in BGP
 
 ## AAA & Management

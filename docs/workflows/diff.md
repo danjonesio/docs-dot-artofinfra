@@ -30,12 +30,7 @@ Always load:
 - The vendor or platform doc(s) for the configs being diffed
 - `https://docs.artofinfra.com/general/hardening.md` (security shifts hide in diffs)
 
-Load conditionally based on what changes touch:
-
-- Routing protocol stanzas: relevant `https://docs.artofinfra.com/general/{bgp,ospf,...}.md` docs
-- ACLs: `https://docs.artofinfra.com/general/acl-design.md`
-- QoS: `https://docs.artofinfra.com/general/qos.md`
-- VXLAN/EVPN: `https://docs.artofinfra.com/general/vxlan.md`
+Load topical docs that match the stanzas the diff touches. Consult `https://docs.artofinfra.com/general/index.md` and load every general doc whose topic is in the changed sections.
 
 If a section was not changed, skip its doc. Diff is about deltas, not the whole posture.
 
