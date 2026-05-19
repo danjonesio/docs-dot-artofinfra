@@ -1,4 +1,4 @@
-# EVPN: Concepts
+# EVPN: Best Practices
 
 Vendor- and transport-agnostic rules for Ethernet VPN. EVPN is a BGP control plane (RFC 7432 and extensions) that can be carried over MPLS, VXLAN, or SR-MPLS. The rules here apply across transports. For transport specifics:
 
